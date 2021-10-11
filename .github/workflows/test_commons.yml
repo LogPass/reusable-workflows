@@ -1,0 +1,71 @@
+---
+name: '*test_commons'
+'on':
+  workflow_call:
+    inputs:
+      timeout-minutes:
+        description: Misspell `build` job timeout in minutes
+        required: false
+        type: number
+        default: 10
+      dotenvs-files:
+        description: |
+          Space-separated list of dotenv files
+          This input take precedence over `dotenvs-paths`.
+          When both `dotenv-files` and `dotenv-paths` are empty `dotenv-linter`
+          is not run at all.
+        required: false
+        type: string
+      dotenvs-paths:
+        description: |
+          Space-separated list of directories with dotenv files only inside.
+        required: false
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: "${{ inputs.timeout-minutes }}"
+    steps:
+      - name: setup python 3
+        uses: actions/setup-python@v2.2.2
+        with:
+          python-version: '3.x'
+      - uses: actions/cache@v2.1.6
+        with:
+          path: ~/.cache/pip
+          key: "${{ runner.os }}-pip"
+      - name: setup latest node
+        uses: actions/setup-node@v2.4.1
+        with:
+          node-version: 'lts/*'
+      - uses: actions/cache@v2.1.6
+        with:
+          path: ~/.npm
+          key: "${{ runner.os }}-npm"
+      - name: install test dependencies.
+        run: |
+          pip install yamllint dotenv-linter
+          npm install --global markdownlint-cli
+      - uses: actions/checkout@v2
+      - name: lint YAML files
+        run: yamllint --strict --format=colored .
+      - name: lint Markdown files
+        run: markdownlint .
+      - name: lint dotenv files
+        # yamllint disable rule:line-length
+        run: |
+          DOTENV_FILES="${{ inputs.dotenvs-files }}"
+
+          if [[ "${DOTENV_FILES}" == '' && "${{ inputs.dotenv-paths }}" != '' ]];
+          then
+            DOTENV_FILES="$(find '${{ inputs.dotenvs-paths }}' -type f | paste -sd ' ')"
+          fi
+
+          if [[ "${DOTENV_FILES}" != '' ]];
+          then
+            dotenv-linter "${DOTENV_FILES}"
+          else
+            echo 'No dotenv files specified. Skipping..'
+          fi
+        # yamllint enable rule:line-length
