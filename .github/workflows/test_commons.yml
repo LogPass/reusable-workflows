@@ -64,7 +64,7 @@ jobs:
 
           if [[ "${DOTENV_FILES}" != '' ]];
           then
-            dotenv-linter "${DOTENV_FILES}"
+            dotenv-linter ${DOTENV_FILES}
           else
             echo 'No dotenv files specified. Skipping..'
           fi
