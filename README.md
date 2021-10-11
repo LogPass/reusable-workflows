@@ -2,6 +2,8 @@
 
 Common, reusable GitHub workflows used by LogPass.
 
+[Reusable workflows reference](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows).
+
 ## Workflows naming convention
 
 All reusable workflows should be named with `*` prefix (e.g. `*misspell`),
