@@ -59,7 +59,7 @@ jobs:
 
           if [[ "${DOTENV_FILES}" == '' && "${{ inputs.dotenvs-paths }}" != '' ]];
           then
-            DOTENV_FILES="$(find '${{ inputs.dotenvs-paths }}' -type f | paste -sd ' ')"
+            DOTENV_FILES="$(find ${{ inputs.dotenvs-paths }} -type f | paste -sd ' ')"
           fi
 
           if [[ "${DOTENV_FILES}" != '' ]];
