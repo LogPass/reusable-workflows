@@ -57,7 +57,7 @@ jobs:
         run: |
           DOTENV_FILES="${{ inputs.dotenvs-files }}"
 
-          if [[ "${DOTENV_FILES}" == '' && "${{ inputs.dotenv-paths }}" != '' ]];
+          if [[ "${DOTENV_FILES}" == '' && "${{ inputs.dotenvs-paths }}" != '' ]];
           then
             DOTENV_FILES="$(find '${{ inputs.dotenvs-paths }}' -type f | paste -sd ' ')"
           fi
