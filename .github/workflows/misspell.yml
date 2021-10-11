@@ -4,7 +4,7 @@ name: '*misspell'
   workflow_call:
     inputs:
       timeout-minutes:
-        description: Misspell build job timeout in minutes
+        description: Misspell `build` job timeout in minutes
         required: false
         type: number
         default: 5
