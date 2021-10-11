@@ -1,0 +1,14 @@
+---
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "05:35"
+    open-pull-requests-limit: 5
+    reviewers:
+      - bbarwik
+      - skarzi
+    commit-message:
+      prefix: "build(deps): "
