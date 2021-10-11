@@ -1,0 +1,44 @@
+---
+name: '*misspell'
+'on':
+  workflow_call:
+    inputs:
+      timeout-minutes:
+        description: Misspell build job timeout in minutes
+        required: false
+        type: number
+        default: 5
+      pr-branch:
+        description: Pull Request branch
+        required: false
+        type: string
+        default: fix/misspell-fixer/typos
+      pr-reviewers:
+        description: New-line separated usernames of PR reviewers
+        type: string
+        required: false
+      pr-team-reviewers:
+        description: New-line separated team names added to PR reviewers
+        type: string
+        required: false
+    secrets:
+      token:
+        description: GitHub token used to create Pull Request
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: "${{ inputs.timeout-minutes }}"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: sobolevn/misspell-fixer-action@master
+      - uses: peter-evans/create-pull-request@v3.10.1
+        with:
+          token: "${{ secrets.token }}"
+          commit-message: "fix: fix typos by misspell-fixer"
+          title: typos fixes by misspell-fixer
+          branch: "${{ inputs.pr-branch }}"
+          delete-branch: true
+          reviewers: "${{ inputs.pr-reviewers }}"
+          team-reviewers: "${{ inputs.pr-team-reviewers }}"
