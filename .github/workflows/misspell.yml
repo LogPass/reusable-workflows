@@ -36,9 +36,11 @@ jobs:
       - uses: peter-evans/create-pull-request@v3.10.1
         with:
           token: "${{ secrets.token }}"
+          committer: logpass-bot <github-bot@logpass.me>
+          author: logpass-bot <github-bot@logpass.me>
           commit-message: "fix: fix typos by misspell-fixer"
-          title: typos fixes by misspell-fixer
           branch: "${{ inputs.pr-branch }}"
           delete-branch: true
+          title: typos fixes by misspell-fixer
           reviewers: "${{ inputs.pr-reviewers }}"
           team-reviewers: "${{ inputs.pr-team-reviewers }}"
