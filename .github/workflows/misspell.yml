@@ -33,7 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: sobolevn/misspell-fixer-action@master
-      - uses: peter-evans/create-pull-request@v3.10.1
+      - uses: peter-evans/create-pull-request@v3.11.0
         with:
           token: "${{ secrets.token }}"
           committer: logpass-bot <github-bot@logpass.me>
