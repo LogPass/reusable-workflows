@@ -8,6 +8,16 @@ name: '*misspell'
         required: false
         type: number
         default: 5
+      pr-committer:
+        description: Pull Request committer
+        required: false
+        type: string
+        default: logpass-bot <github-bot@logpass.me>
+      pr-author:
+        description: Pull Request author
+        required: false
+        type: string
+        default: logpass-bot <github-bot@logpass.me>
       pr-branch:
         description: Pull Request branch
         required: false
@@ -36,11 +46,11 @@ jobs:
       - uses: peter-evans/create-pull-request@v3.11.0
         with:
           token: "${{ secrets.token }}"
-          committer: logpass-bot <github-bot@logpass.me>
-          author: logpass-bot <github-bot@logpass.me>
+          committer: "${{ inputs.pr-committer }}"
+          author: "${{ inputs.pr-author }}"
           commit-message: "fix: fix typos by misspell-fixer"
           branch: "${{ inputs.pr-branch }}"
           delete-branch: true
-          title: typos fixes by misspell-fixer
+          title: "fix: typos fixes by misspell-fixer"
           reviewers: "${{ inputs.pr-reviewers }}"
           team-reviewers: "${{ inputs.pr-team-reviewers }}"
