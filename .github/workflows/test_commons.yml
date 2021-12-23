@@ -45,8 +45,13 @@ jobs:
           key: "${{ runner.os }}-npm"
       - name: install test dependencies.
         run: |
+          echo "::group::Installing Python dependencies.."
           pip install yamllint dotenv-linter
+          echo "::endgroup::"
+
+          echo "::group::Installing Node.JS dependencies.."
           npm install --global markdownlint-cli
+          echo "::endgroup::"
       - uses: actions/checkout@v2
       - name: lint YAML files
         run: yamllint --strict --format=colored .
