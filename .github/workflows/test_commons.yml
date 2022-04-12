@@ -36,7 +36,7 @@ jobs:
           path: ~/.cache/pip
           key: "${{ runner.os }}-pip"
       - name: setup latest node
-        uses: actions/setup-node@v3.1.0
+        uses: actions/setup-node@v3.1.1
         with:
           node-version: 'lts/*'
       - uses: actions/cache@v3
